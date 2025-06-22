@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import Card from './Card';
+import { useContext } from 'react'
+import Card from './Card.jsx';
 import {Context} from './Context/Store'
 
 const Hero = () => {
 
-  const {newsData,setSearch,query, setQuery} = useContext(Context);
+  const {newsData,setSearch,setQuery} = useContext(Context);
 
   const handleClick = (input)=>{
           setSearch(input);

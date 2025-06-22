@@ -1,6 +1,5 @@
-import React from 'react'
-import Hero from './Hero'
-import NavBar from './NavBar'
+import Hero from './Hero.jsx'
+import NavBar from './NavBar.jsx'
 
 const Home = () => {
   return (
