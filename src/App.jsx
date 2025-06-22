@@ -1,4 +1,3 @@
-import React from 'react'
 import Home from './Components/Home'
 import ContextProvider from './Components/Context/Store'
 import { BrowserRouter } from 'react-router-dom'

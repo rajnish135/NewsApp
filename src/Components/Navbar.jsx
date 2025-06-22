@@ -4,18 +4,20 @@ import { useEffect } from 'react';
 
 const NavBar = () => {
 
-  const API_KEY = "56e0ec655c3943bdb2810b85150757e6";
-
   const {setNewsData,search,setSearch,query, setQuery} = useContext(Context);
 
    // Hold input value separately
  
     const getData = async ()=>{
+
+      const API_KEY = import.meta.env.VITE_API_KEY;
       
-      const response = await fetch(`https://newsapi.org/v2/everything?q=${search}&apiKey=${API_KEY}`)
+      const response = await fetch(`https://gnews.io/api/v4/search?q=${search}&apikey=${API_KEY}`)
       
       const jsonData = await response.json();
-     //  console.log(jsonData)
+
+      console.log("NEWS DATA",jsonData.articles);
+     
       setNewsData(jsonData.articles);
 
    }
