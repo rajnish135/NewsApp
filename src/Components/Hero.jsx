@@ -1,32 +1,42 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
 import Card from './Card.jsx';
-import {Context} from './Context/Store'
+import { Context } from './Context/Store';
 
 const Hero = () => {
+  const { newsData, setSearch, setQuery } = useContext(Context);
 
-  const {newsData,setSearch,setQuery} = useContext(Context);
+  const handleClick = (input) => {
+    setSearch(input);
+    setQuery(input);
+  };
 
-  const handleClick = (input)=>{
-          setSearch(input);
-          setQuery(input);
-  }
+  const topics = ["Sports", "Politics", "Health", "Entertainment", "Technology"];
 
   return (
-    <div className='flex flex-col '>
+   <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100 min-h-screen px-4 py-10">
 
-        <h2 className='text-center mt-4 mr-30 font-bold text-xl'>Stay Update with TrendyNews!</h2>
-        
-        <div className='flex gap-2 mt-9 justify-center'>
-        <button onClick={()=>handleClick("Sports")} className='rounded-full bg-orange-500 w-30 cursor-pointer text-white p-1.5'>Sports</button>
-        <button onClick={()=>handleClick("Politics")} className='rounded-full bg-orange-500 w-30 cursor-pointer text-white p-1.5'>Politics</button>
-        <button onClick={()=>handleClick("Health")} className='rounded-full bg-orange-500 w-30 cursor-pointer text-white p-1.5'>Health</button>
-        <button onClick={()=>handleClick("Entertainment")} className='rounded-full bg-orange-500 w-30 cursor-pointer text-white p-1.5'>Entertainment</button>
-        <button onClick={()=>handleClick("Technology")} className='rounded-full bg-orange-500 w-30 cursor-pointer text-white p-1.5'>Technology</button>
-        </div>
+      <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-pink-500 text-transparent bg-clip-text text-center mb-10 drop-shadow-sm">
+        Stay Updated with <span className="italic">TrendyNews!</span>
+      </h2>
 
-        <Card data={newsData}/>
+      <div className="flex flex-wrap justify-center gap-4 mb-10">
+        {topics.map((topic, index) => (
+          <button
+            key={index}
+            onClick={() => handleClick(topic)}
+            className="transition-all duration-300 ease-in-out bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full shadow-lg hover:scale-105 hover:shadow-orange-300 active:scale-95"
+          >
+            {topic}
+          </button>
+        ))}
+      </div>
+
+      {/* 👇 Full-width restored (removed max-w-screen-lg) */}
+      <div className="w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6 border border-gray-200">
+        <Card data={newsData} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

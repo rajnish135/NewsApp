@@ -1,60 +1,80 @@
-import { useContext} from 'react'
-import {Context} from './Context/Store'
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { Context } from './Context/Store';
 
 const NavBar = () => {
+  const { setNewsData, search, setSearch, query, setQuery } = useContext(Context);
 
-  const {setNewsData,search,setSearch,query, setQuery} = useContext(Context);
+  const getData = async () => {
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const keyword = search || "India";
+    const url = `https://api.currentsapi.services/v1/search?apiKey=${apiKey}&keywords=${keyword}&language=en&page_size=100`;
 
-   // Hold input value separately
- 
-    const getData = async ()=>{
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      console.log("NEWS DATA", data);
+      setNewsData(data.news || []);
+    } catch (err) {
+      console.error("Failed to fetch news:", err);
+    }
+  };
 
-      const API_KEY = import.meta.env.VITE_API_KEY;
-      
-      const response = await fetch(`https://gnews.io/api/v4/search?q=${search}&apikey=${API_KEY}`)
-      
-      const jsonData = await response.json();
-
-      console.log("NEWS DATA",jsonData.articles);
-     
-      setNewsData(jsonData.articles);
-
-   }
-     
-   const handleInputChange = (input) => {
+  const handleInputChange = (input) => {
     setQuery(input);
   };
 
-  // Update `search` only when the button is clicked
   const searchHandler = () => {
     setSearch(query);
   };
 
-  if(search==="")
-  setSearch("India")
-      
-
   useEffect(() => {
-
-      getData();
-    
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
+  useEffect(() => {
+    if (search === "") {
+      setSearch("India");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className='flex justify-between px-[50px] bg-blue-200 p-5'>
+    <div className="w-full px-4 py-4 bg-gradient-to-r from-blue-100 via-pink-100 to-yellow-100 backdrop-blur-lg shadow-md sticky top-0 z-50">
+      
+      <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
 
-        <h2 className='text-xl font-bold'>Trendy News</h2>
+        {/* Logo */}
+        <h2 className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+          Trendlit<span className="italic font-bold"></span>
+        </h2>
 
-        <p className='font-semibold'>All News Top Headlines</p>
+        {/* Tagline */}
+       <p className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent font-medium text-sm sm:text-base text-center">
+        All News Top Headlines
+      </p>
 
-        <div className='flex'>
-           <input onChange={(e)=>handleInputChange(e.target.value)} value={query} className='border mr-[5px] bg-white outline-none' type='text'/>
-           <button onClick={()=>searchHandler()} className='bg-blue-400 cursor-pointer'>Search</button>
+
+        {/* Search Box */}
+        <div className="flex items-center gap-2 bg-white shadow-inner px-3 py-2 rounded-full w-full sm:w-auto">
+          <input
+            onChange={(e) => handleInputChange(e.target.value)}
+            value={query}
+            type="text"
+            placeholder="Search News..."
+            className="bg-transparent outline-none w-full text-sm sm:text-base"
+          />
+          <button
+            onClick={searchHandler}
+            className="bg-blue-500 hover:bg-blue-600 active:scale-95 transition-all text-white text-sm sm:text-base px-4 py-1.5 rounded-full shadow-md"
+          >
+            Search
+          </button>
         </div>
 
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
