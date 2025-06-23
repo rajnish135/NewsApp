@@ -4,7 +4,7 @@ export const Context = createContext();
 
 const ContextProvider = ({ children }) => {
   const [newsData, setNewsData] = useState([]);
-  const [search, setSearch] = useState("India");
+  const [search, setSearch] = useState("");
 
   return (
     <Context.Provider value={{ newsData, setNewsData, search, setSearch }}>
