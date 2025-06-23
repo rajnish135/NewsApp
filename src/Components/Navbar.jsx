@@ -16,10 +16,11 @@ const NavBar = () => {
   const getData = async () => {
     const apiKey = import.meta.env.VITE_API_KEY;
     const keywordOrCategory = search || "India";
+    const lowerCaseInput = keywordOrCategory.toLowerCase();
+    const isCat = isCategory(lowerCaseInput);
 
-    const isCat = isCategory(keywordOrCategory);
     const url = isCat
-      ? `https://api.currentsapi.services/v1/latest-news?apiKey=${apiKey}&category=${keywordOrCategory}&language=en`
+      ? `https://api.currentsapi.services/v1/latest-news?apiKey=${apiKey}&category=${lowerCaseInput}&language=en`
       : `https://api.currentsapi.services/v1/search?apiKey=${apiKey}&keywords=${keywordOrCategory}&language=en&page_size=100`;
 
     try {
@@ -37,26 +38,22 @@ const NavBar = () => {
   };
 
   const searchHandler = () => {
-    // You can trigger fetch manually or just rely on the useEffect
     if (search) getData();
   };
 
   useEffect(() => {
     getData();
-   
   }, [search]);
 
   useEffect(() => {
     if (!search) {
       setSearch("India");
     }
-   
   }, []);
 
   return (
     <div className="w-full px-4 py-4 bg-gradient-to-r from-blue-100 via-pink-100 to-yellow-100 backdrop-blur-lg shadow-md sticky top-0 z-50">
       <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
-
         {/* Logo */}
         <h2 className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
           Trendlit
@@ -83,7 +80,6 @@ const NavBar = () => {
             Search
           </button>
         </div>
-
       </div>
     </div>
   );

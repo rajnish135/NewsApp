@@ -9,7 +9,7 @@ const Hero = () => {
     setSearch(input);
   };
 
-  const topics = ["Sports", "Politics", "Health", "Entertainment", "Technology"];
+  const topics = ["Sports", "Politics", "Health", "Entertainment", "Technology","Education","World"];
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100 min-h-screen px-4 py-10">
