@@ -6,7 +6,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <ContextProvider>
-        <div className="app-container">
+        <div>
           <Home />
         </div>
       </ContextProvider>
